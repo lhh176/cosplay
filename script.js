@@ -7,6 +7,7 @@ const showcaseCards = Array.from(document.querySelectorAll(".showcase-card"));
 const videoCards = Array.from(document.querySelectorAll(".video-card"));
 const contactCards = Array.from(document.querySelectorAll(".contact-card"));
 const metaDescription = document.querySelector('meta[name="description"]');
+const entryOverlay = document.querySelector(".entry-overlay");
 const lightbox = document.querySelector(".lightbox");
 const lightboxShell = document.querySelector(".lightbox-shell");
 const lightboxClose = document.querySelector(".lightbox-close");
@@ -445,6 +446,7 @@ let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight * 0.35;
 let pointerRaf = 0;
 let videoPreviewObserver = null;
+let entrySequenceTimer = 0;
 
 function getThemeLabel(theme) {
   return themeLabels[currentLanguage]?.[theme] ?? themeLabels.zh[theme];
@@ -587,6 +589,42 @@ function shouldEnhanceMotion() {
 
 function shouldEnhancePointerMotion() {
   return !prefersReducedMotion() && !prefersSingleTapPreview();
+}
+
+function finalizeEntrySequence() {
+  window.clearTimeout(entrySequenceTimer);
+  document.body.classList.remove("is-entry-pending", "is-entry-active");
+  document.body.classList.add("is-entry-complete");
+
+  if (entryOverlay) {
+    entryOverlay.hidden = true;
+  }
+}
+
+function startEntrySequence() {
+  if (!entryOverlay) {
+    finalizeEntrySequence();
+    return;
+  }
+
+  entryOverlay.hidden = false;
+  document.body.classList.remove("is-entry-complete");
+
+  if (prefersReducedMotion()) {
+    finalizeEntrySequence();
+    return;
+  }
+
+  document.body.classList.add("is-entry-pending");
+
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      document.body.classList.remove("is-entry-pending");
+      document.body.classList.add("is-entry-active");
+    });
+  });
+
+  entrySequenceTimer = window.setTimeout(finalizeEntrySequence, 3020);
 }
 
 function getVisibleShowcaseCards() {
@@ -1264,3 +1302,4 @@ document.addEventListener("keydown", (event) => {
 initLanguage();
 initTheme();
 applyFilter("all");
+startEntrySequence();

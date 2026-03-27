@@ -16,7 +16,26 @@
   >
   <link rel="stylesheet" href="styles.css">
 </head>
-<body id="top">
+<body id="top" class="is-entry-pending">
+  <div class="entry-overlay" aria-hidden="true">
+    <div class="entry-overlay__grid"></div>
+    <div class="entry-overlay__beam"></div>
+    <div class="entry-overlay__pulse"></div>
+    <div class="entry-overlay__content">
+      <div class="entry-overlay__hud">
+        <span class="entry-overlay__ring entry-overlay__ring-a"></span>
+        <span class="entry-overlay__ring entry-overlay__ring-b"></span>
+        <span class="entry-overlay__ring entry-overlay__ring-c"></span>
+        <span class="entry-overlay__crosshair"></span>
+        <span class="entry-overlay__core"></span>
+      </div>
+      <div class="entry-overlay__copy">
+        <p class="entry-overlay__eyebrow">SYSTEM ONLINE</p>
+        <strong class="entry-overlay__title">JINGYU VISUAL PORTFOLIO</strong>
+        <p class="entry-overlay__status">AI VIDEO / PHOTO / COSPLAY SIGNAL SYNC</p>
+      </div>
+    </div>
+  </div>
   <div class="page-shell">
     <header class="hero">
       <nav class="nav">
@@ -179,16 +198,16 @@
 
             <article
               class="video-card video-card-featured"
-              data-video-src=""
+              data-video-src="download-web.mp4"
               data-video-type="video/mp4"
               data-video-link=""
               data-video-link-label="打开视频链接"
-              data-video-state="empty"
+              data-video-state="ready"
             >
               <div class="video-surface theme-shadow">
-                <span class="video-chip">Soon</span>
+                <span class="video-chip">Preview</span>
                 <span class="play-button" aria-hidden="true"></span>
-                <span class="video-duration">00:54</span>
+                <span class="video-duration">00:10</span>
               </div>
               <div class="showcase-body">
                 <p class="showcase-tag">AI 视频</p>
